@@ -1,0 +1,41 @@
+.leftSidebar {
+	background-color: var(--primary-color);
+	border-radius: 3px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	overflow-x: hidden;
+	margin: 5px;
+}
+.navLinks {
+	color: var(--text-primary-color);
+	display: block;
+	text-decoration: none;
+	padding: 10px;
+	margin: 0px;
+}
+.navLinks:hover,
+.activeLink:hover {
+	background-color: var(--text-header-color);
+	color: var(--text-secondary-color);
+}
+.activeLink {
+	display: block;
+	text-decoration: none;
+	color: var(--text-secondary-color);
+	padding: 10px;
+	margin: 0px;
+	background-color: var(--text-header-color);
+	color: var(--text-secondary-color);
+	font-weight: 600;
+}
+
+.bottomNavigation {
+	position: fixed;
+	bottom: 0;
+	display: none;
+}
+
+@media only screen and (max-width: 600px) {
+	.bottomNavigation {
+		display: block;
+	}
+}
