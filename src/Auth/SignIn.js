@@ -27,16 +27,16 @@ const SignIn = () => {
 		await signOut(auth);
 	};
 
-	useEffect(() => {
-		onAuthStateChanged(auth, (user) => {
-			if (user) {
-				const uid = user.uid;
-				console.log('The User is Signed in ' + uid);
-			} else {
-				console.log('No USER');
-			}
-		});
-	}, []);
+	// useEffect(() => {
+	// 	onAuthStateChanged(auth, (user) => {
+	// 		if (user) {
+	// 			const uid = user.uid;
+	// 			console.log('The User is Signed in ' + uid);
+	// 		} else {
+	// 			console.log('No USER');
+	// 		}
+	// 	});
+	// }, []);
 
 	const handleForgotPassword = async () => {
 		try {
