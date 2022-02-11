@@ -38,6 +38,7 @@ const SignIn = () => {
 			type: 'loggedTrue',
 			payload: user.user.email,
 		});
+		navigate('../dashboard', { replace: true });
 	};
 
 	const handleSignOut = async () => {
@@ -107,7 +108,6 @@ const SignIn = () => {
 						</Link>
 					</Grid>
 				</Grid>
-				<h1>{sentData}</h1>
 			</Grid>
 		</Grid>
 	);

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import {
 	createUserWithEmailAndPassword,
 	sendPasswordResetEmail,
@@ -13,11 +13,19 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import currenctData from '../Data/currencies.json';
 
 const SignUp = () => {
+	// console.log(currenctData);
 	let navigate = useNavigate();
 	const [signUpEmail, setSignUpEmail] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
+	const [name, setName] = useState('');
+	const [cur, setCur] = useState('CAD');
 	const auth = getAuth(app);
 	const dispatch = useDispatch();
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
@@ -25,16 +33,22 @@ const SignUp = () => {
 	const handleSignUp = async (e) => {
 		e.preventDefault();
 		const defaultData = {
-			displayName: 'User',
-			currency: 'CAD',
+			displayName: name,
+			currency: cur,
+			email: signUpEmail,
+			timeStamp: serverTimestamp(),
 		};
 		const user = await createUserWithEmailAndPassword(
 			auth,
 			signUpEmail,
 			signUpPassword
 		);
-		dispatch({ type: 'loggedTrue' });
+		dispatch({
+			type: 'loggedTrue',
+			payload: defaultData,
+		});
 		await setDoc(doc(db, 'users', user.user.uid), defaultData);
+		navigate('/', { replace: true });
 	};
 
 	const handleForgotPassword = async () => {
@@ -45,7 +59,9 @@ const SignUp = () => {
 			console.log(e.code + ' ' + e.message);
 		}
 	};
-
+	let age = 20;
+	let tempObj = currenctData;
+	let temparr = Object.keys(tempObj);
 	return (
 		<>
 			<Grid container spacing={0} justify='center'>
@@ -63,6 +79,13 @@ const SignUp = () => {
 							required
 							autoFocus
 							fullWidth
+							label='Name'
+							onChange={(e) => setName(e.target.value)}
+						/>
+						<TextField
+							margin='normal'
+							required
+							fullWidth
 							label='Email Address'
 							onChange={(e) => setSignUpEmail(e.target.value)}
 						/>
@@ -74,6 +97,21 @@ const SignUp = () => {
 							type='password'
 							onChange={(e) => setSignUpPassword(e.target.value)}
 						/>
+						<FormControl fullWidth style={{ marginTop: '10px' }}>
+							<InputLabel id='demo-simple-select-label'>Age</InputLabel>
+							<Select
+								labelId='demo-simple-select-label'
+								id='demo-simple-select'
+								value={cur}
+								label='Age'
+								onChange={(e) => setCur(e.target.value)}>
+								{temparr.map((x) => (
+									<MenuItem key={x} value={x}>
+										{tempObj[x]}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
 
 						<Button
 							type='submit'
