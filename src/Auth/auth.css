@@ -1,9 +1,31 @@
+/* https://color.adobe.com/search?q=black%20gold */
+/* Color Theme Swatches in Hex */
+.Copy-of-Black-Gold-Teal-1-hex {
+	color: #000000;
+}
+.Copy-of-Black-Gold-Teal-2-hex {
+	color: #d4b52a;
+}
+.Copy-of-Black-Gold-Teal-3-hex {
+	color: #0b394a;
+}
+.Copy-of-Black-Gold-Teal-4-hex {
+	color: #191919;
+}
+.Copy-of-Black-Gold-Teal-5-hex {
+	color: #292929;
+}
+
 .signInPage {
 	background-color: white;
 	padding: 20px;
-	height: 100vh;
-	margin-top: 50%;
+	border-radius: 10px;
+	max-width: 400px;
 }
-.formSignIn {
-	margin-top: 20vh;
+.signInContainer {
+	background-color: #0b394a;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

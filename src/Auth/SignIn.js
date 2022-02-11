@@ -14,6 +14,7 @@ import {
 	sendPasswordResetEmail,
 } from 'firebase/auth';
 import { app } from './firebase';
+import { VerticalAlignCenter } from '@mui/icons-material';
 
 const SignIn = () => {
 	let navigate = useNavigate();
@@ -56,16 +57,20 @@ const SignIn = () => {
 	};
 
 	return (
-		<Grid container spacing={0} justify='center'>
-			<Grid item sm={7}>
-				<div style={{ backgroundColor: 'black', height: '100%' }}></div>
-			</Grid>
-
-			<Grid item sm={5} className='signInPage'>
+		<div className='signInContainer'>
+			<div className='signInPage'>
+				{/* <center>
+					<h1
+						style={{
+							color: '#0b394a',
+							fontFamily: 'arial',
+							textTransform: 'uppercase',
+						}}>
+						Sign in to Expense Manager
+					</h1>
+				</center> */}
+				<br />
 				<form onSubmit={handleSignIn} className='formSignIn'>
-					<center>
-						<h2>SIGN IN PAGE</h2>
-					</center>
 					<TextField
 						margin='normal'
 						required
@@ -108,8 +113,8 @@ const SignIn = () => {
 						</Link>
 					</Grid>
 				</Grid>
-			</Grid>
-		</Grid>
+			</div>
+		</div>
 	);
 };
 export default SignIn;
