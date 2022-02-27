@@ -50,14 +50,16 @@ const Categories = () => {
 			<div className='categriesHeader'>Categories</div>
 
 			<div className='categoryList'>
-				<div>
+				<div className='catAddContainer'>
 					<input
 						value={newCatData}
 						type='text'
-						placeholder='Add a New Category'
+						placeholder='Category Name'
 						onChange={(e) => setNewCatData(e.target.value)}
 					/>
-					<button onClick={addCat}>ADD</button>
+					<button style={{ fontSize: '30px' }} onClick={addCat}>
+						+
+					</button>
 				</div>
 				<Grid container>
 					{categories.map((x, i) => (

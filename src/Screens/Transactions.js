@@ -358,7 +358,8 @@ const Transactions = () => {
 				</Box>
 			</ModalUnstyled>
 
-			<TableContainer style={{ backgroundColor: 'white' }}>
+			<TableContainer
+				style={{ backgroundColor: 'white', paddingBottom: '50px' }}>
 				<Table>
 					<TableHead>
 						<TableRow>
