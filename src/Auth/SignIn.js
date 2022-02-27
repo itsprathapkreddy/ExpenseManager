@@ -13,8 +13,8 @@ import {
 	signOut,
 	sendPasswordResetEmail,
 } from 'firebase/auth';
-import { app } from './firebase';
-import { VerticalAlignCenter } from '@mui/icons-material';
+import { app, db } from './firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 const SignIn = () => {
 	let navigate = useNavigate();
@@ -34,12 +34,23 @@ const SignIn = () => {
 			signInEmail,
 			signInPassword
 		);
-		console.log(user.user.uid + ':' + user.user.email);
-		dispatch({
-			type: 'loggedTrue',
-			payload: user.user.email,
-		});
-		navigate('../dashboard', { replace: true });
+		console.log(user.user.uid);
+		const docRef = doc(db, 'users', user.user.uid);
+		const docSnap = await getDoc(docRef);
+
+		if (docSnap.exists()) {
+			const data = docSnap.data();
+			console.log('DOC DATA: ' + JSON.stringify(data));
+
+			dispatch({
+				type: 'loggedTrue',
+				payload: {
+					uname: data.uname,
+					email: data.email,
+					currency: data.currency,
+				},
+			});
+		}
 	};
 
 	const handleSignOut = async () => {
@@ -59,17 +70,7 @@ const SignIn = () => {
 	return (
 		<div className='signInContainer'>
 			<div className='signInPage'>
-				{/* <center>
-					<h1
-						style={{
-							color: '#0b394a',
-							fontFamily: 'arial',
-							textTransform: 'uppercase',
-						}}>
-						Sign in to Expense Manager
-					</h1>
-				</center> */}
-				<br />
+				<div className='authHeader'>Expense Manager</div>
 				<form onSubmit={handleSignIn} className='formSignIn'>
 					<TextField
 						margin='normal'

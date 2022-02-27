@@ -20,11 +20,10 @@ import Select from '@mui/material/Select';
 import currenctData from '../Data/currencies.json';
 
 const SignUp = () => {
-	// console.log(currenctData);
 	let navigate = useNavigate();
 	const [signUpEmail, setSignUpEmail] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
-	const [name, setName] = useState('');
+	const [uname, setUname] = useState('');
 	const [cur, setCur] = useState('CAD');
 	const auth = getAuth(app);
 	const dispatch = useDispatch();
@@ -33,7 +32,7 @@ const SignUp = () => {
 	const handleSignUp = async (e) => {
 		e.preventDefault();
 		const defaultData = {
-			displayName: name,
+			uname: uname,
 			currency: cur,
 			email: signUpEmail,
 			timeStamp: serverTimestamp(),
@@ -43,12 +42,12 @@ const SignUp = () => {
 			signUpEmail,
 			signUpPassword
 		);
+
 		dispatch({
 			type: 'loggedTrue',
 			payload: defaultData,
 		});
 		await setDoc(doc(db, 'users', user.user.uid), defaultData);
-		navigate('/', { replace: true });
 	};
 
 	const handleForgotPassword = async () => {
@@ -65,6 +64,7 @@ const SignUp = () => {
 	return (
 		<div className='signInContainer'>
 			<div className='signInPage'>
+				<div className='authHeader'>Expense Manager</div>
 				<form onSubmit={handleSignUp}>
 					<TextField
 						margin='normal'
@@ -72,7 +72,7 @@ const SignUp = () => {
 						autoFocus
 						fullWidth
 						label='Name'
-						onChange={(e) => setName(e.target.value)}
+						onChange={(e) => setUname(e.target.value)}
 					/>
 					<TextField
 						margin='normal'
@@ -114,12 +114,12 @@ const SignUp = () => {
 					</Button>
 				</form>
 				<Grid container>
-					<Grid item sm={6}>
+					<Grid item sm={4}>
 						<Link href='#' variant='body2' onClick={handleForgotPassword}>
 							Forgot password?
 						</Link>
 					</Grid>
-					<Grid item sm={6} textAlign='right'>
+					<Grid item sm={8} textAlign='right'>
 						<Link
 							href='#'
 							variant='body2'

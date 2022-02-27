@@ -1,21 +1,45 @@
-import { PlaylistAddOutlined } from '@mui/icons-material';
+import { getAuth, signOut } from 'firebase/auth';
 import { createStore } from 'redux';
-
-const intialState = { isLoggedIn: false, email: '', user: 'user' };
+import { app } from '../Auth/firebase';
+const intialState = {
+	uid: '',
+	isLoggedIn: false,
+	email: 'NoEmail',
+	uname: 'Noname',
+	currency: 'CAD',
+	categories: [],
+	transactions: {},
+};
 
 const rootReducer = (state = intialState, action) => {
 	switch (action.type) {
 		case 'loggedTrue': {
-			alert(action.payload);
 			return {
 				...state,
 				isLoggedIn: true,
-				user: action.payload,
-				email: action.payload,
+				uname: action.payload.uname,
+				email: action.payload.email,
+				currency: action.payload.currency,
+				categories: action.payload.categories,
+				uid: action.payload.uid,
+				transactions: action.payload.transactions,
+			};
+		}
+		case 'txnAddStore': {
+			return {
+				...state,
+				transactions: action.payload,
+			};
+		}
+		case 'catStore': {
+			return {
+				...state,
+				categories: action.payload,
 			};
 		}
 		case 'loggedFalse':
-			return { ...state, isLoggedIn: false };
+			return { isLoggedIn: false };
+
 		default:
 			return state;
 	}

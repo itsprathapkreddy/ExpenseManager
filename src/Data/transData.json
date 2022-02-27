@@ -1,0 +1,86 @@
+[
+  {
+    "Date": "11/1/21",
+    "": "Nov 2021",
+    "Category": "Groceries",
+    "Description": "Mizan",
+    "Amount": "$6.86"
+  },
+  {
+    "Date": "11/1/21",
+    "": "Nov 2021",
+    "Category": "Groceries",
+    "Description": "PA",
+    "Amount": "$9.87"
+  },
+  {
+    "Date": "11/4/21",
+    "": "Nov 2021",
+    "Category": "Rent",
+    "Description": "Rent",
+    "Amount": "$250.00"
+  },
+  {
+    "Date": "11/5/21",
+    "": "Nov 2021",
+    "Category": "Groceries",
+    "Description": "IGA",
+    "Amount": "$4.90"
+  },
+  {
+    "Date": "11/7/21",
+    "": "Nov 2021",
+    "Category": "Groceries",
+    "Description": "Mizan",
+    "Amount": "$3.81"
+  },
+  {
+    "Date": "11/7/21",
+    "": "Nov 2021",
+    "Category": "Groceries",
+    "Description": "Ganesh Marche",
+    "Amount": "$21.84"
+  },
+  {
+    "Date": "11/7/21",
+    "": "Nov 2021",
+    "Category": "Groceries",
+    "Description": "Atta",
+    "Amount": "$3.05"
+  },
+  {
+    "Date": "11/8/21",
+    "": "Nov 2021",
+    "Category": "Groceries",
+    "Description": "PA",
+    "Amount": "$4.31"
+  },
+  {
+    "Date": "11/8/21",
+    "": "Nov 2021",
+    "Category": "Eating Out",
+    "Description": "Burger King",
+    "Amount": "$5.74"
+  },
+  {
+    "Date": "11/8/21",
+    "": "Nov 2021",
+    "Category": "Groceries",
+    "Description": "PA",
+    "Amount": "$12.22"
+  },
+  {
+    "Date": "11/9/21",
+    "": "Nov 2021",
+    "Category": "Gift",
+    "Description": "Desserts",
+    "Amount": "$4.72"
+  },
+  {
+    "Date": "11/10/21",
+    "": "Nov 2021",
+    "Category": "Groceries",
+    "Description": "Mizan",
+    "Amount": "$4.30"
+  }
+]

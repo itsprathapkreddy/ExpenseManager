@@ -3,8 +3,16 @@
 	padding: 0;
 }
 .header {
-	background-color: black;
-	color: white;
+	background-color: #0b394a;
+	color: #d4b52a;
 	padding: 10px;
 	font-size: 30px;
+	padding-left: 100px;
+	text-transform: uppercase;
+}
+@media only screen and (max-width: 600px) {
+	.header {
+		padding: 10px;
+		text-align: center;
+	}
 }
