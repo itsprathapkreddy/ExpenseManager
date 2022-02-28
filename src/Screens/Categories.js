@@ -64,10 +64,28 @@ const Categories = () => {
 				<Grid container>
 					{categories.map((x, i) => (
 						<Grid item md={4} key={i} xs={12}>
-							<div className='catItem'>
-								{x}
+							<div style={{ margin: '5px 5px' }}>
 								<span
-									style={{ float: 'right', cursor: 'pointer' }}
+									style={{
+										display: 'inline-block',
+										backgroundColor: 'white',
+										width: '90%',
+										boxSizing: 'border-box',
+										padding: '10px',
+									}}>
+									{x}
+								</span>
+								<span
+									style={{
+										width: '10%',
+										display: 'inline-block',
+										backgroundColor: '#d9534f',
+										color: 'white',
+										margin: '0 auto',
+										cursor: 'pointer',
+										boxSizing: 'border-box',
+										padding: '10px',
+									}}
 									onClick={() => removeCat(i)}>
 									X
 								</span>

@@ -17,7 +17,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import currenctData from '../Data/currencies.json';
 
 const SignUp = () => {
 	let navigate = useNavigate();
@@ -29,6 +28,31 @@ const SignUp = () => {
 	const dispatch = useDispatch();
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
+	const currencyData = [
+		{ htmlCode: '164', name: 'generic currency symbol' },
+		{ htmlCode: '36', name: 'dollar sign' },
+		{ htmlCode: '162', name: 'cent sign' },
+		{ htmlCode: '163', name: 'pound sterling' },
+		{ htmlCode: '165', name: 'yen symbol' },
+		{ htmlCode: '8355', name: 'franc sign' },
+		{ htmlCode: '8356', name: 'lira symbol' },
+		{ htmlCode: '8359', name: 'peseta sign' },
+		{ htmlCode: '8364', name: 'euro symbol' },
+		{ htmlCode: '8377', name: 'rupee symbol' },
+		{ htmlCode: '8361', name: 'won sign' },
+		{ htmlCode: '8372', name: 'hryvnia sign' },
+		{ htmlCode: '8367', name: 'drachma sign' },
+		{ htmlCode: '8366', name: 'tugrik sign' },
+		{ htmlCode: '8368', name: 'german penny sign' },
+		{ htmlCode: '8370', name: 'guarani sign' },
+		{ htmlCode: '8369', name: 'peso sign' },
+		{ htmlCode: '8371', name: 'austral sign' },
+		{ htmlCode: '8373', name: 'cedi sign' },
+		{ htmlCode: '8365', name: 'kip sign' },
+		{ htmlCode: '8362', name: 'new sheqel sign' },
+		{ htmlCode: '8363', name: 'dong sign' },
+	];
+
 	const handleSignUp = async (e) => {
 		e.preventDefault();
 		const defaultData = {
@@ -36,6 +60,20 @@ const SignUp = () => {
 			currency: cur,
 			email: signUpEmail,
 			timeStamp: serverTimestamp(),
+			transactions: {},
+			categories: [
+				'Groceries',
+				'Eating Out',
+				'Coffee',
+				'Travel',
+				'Shopping',
+				'Entertainment',
+				'Education',
+				'Rent',
+				'Gift',
+				'Partying',
+				'Phone',
+			],
 		};
 		const user = await createUserWithEmailAndPassword(
 			auth,
@@ -59,8 +97,6 @@ const SignUp = () => {
 		}
 	};
 
-	let tempObj = currenctData;
-	let temparr = Object.keys(tempObj);
 	return (
 		<div className='signInContainer'>
 			<div className='signInPage'>
@@ -97,9 +133,11 @@ const SignUp = () => {
 							value={cur}
 							label='Currency'
 							onChange={(e) => setCur(e.target.value)}>
-							{temparr.map((x) => (
-								<MenuItem key={x} value={x}>
-									{tempObj[x]}
+							{currencyData.map((x, i) => (
+								<MenuItem
+									key={i}
+									value={String.fromCharCode(x.htmlCode) + ' ' + x.name}>
+									{String.fromCharCode(x.htmlCode) + ' ' + x.name}
 								</MenuItem>
 							))}
 						</Select>

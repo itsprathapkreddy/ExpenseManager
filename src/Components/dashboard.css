@@ -60,7 +60,7 @@
 	border-bottom: 1px solid black;
 }
 .test001 {
-	width: 100vw;
+	/* width: 100vw; */
 	overflow-x: auto;
 }
 .accountTable tbody {
@@ -165,18 +165,18 @@
 	all: unset;
 	background-color: #002147;
 	color: white;
-	padding: 5px;
-	margin: 5px;
 	cursor: pointer;
-	border-radius: 5px;
-	width: 10%;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	box-sizing: border-box;
+	padding: 5px;
+	width: 20%;
 }
 .catAddContainer input {
 	all: unset;
-	border-bottom: 1px solid #002147;
-	width: 70%;
+	box-sizing: border-box;
+	width: 80%;
 	padding: 5px;
-	margin: 5px;
 }
 
 @media only screen and (max-width: 900px) {

@@ -29,6 +29,7 @@ import {
 
 const Transactions = () => {
 	const [addTxn, setAddTxn] = useState(false);
+	const [editTxn, setEditTnx] = useState(false);
 	const categories = useSelector((state) => state.categories);
 	const userId = useSelector((state) => state.uid);
 	const ts = useSelector((state) => state.transactions);
@@ -336,7 +337,11 @@ const Transactions = () => {
 							type='submit'
 							variant='contained'
 							color='success'
-							style={{ width: '49%' }}>
+							style={{ width: '49%' }}
+							onClick={() => {
+								setDetailTrans(false);
+								setEditTnx(true);
+							}}>
 							EDIT
 						</Button>
 						<Button
@@ -355,6 +360,143 @@ const Transactions = () => {
 						style={{ width: '100%', marginTop: '10px' }}>
 						CANCEL
 					</Button>
+				</Box>
+			</ModalUnstyled>
+
+			<ModalUnstyled
+				className='modalStyle'
+				aria-labelledby='unstyled-modal-title'
+				aria-describedby='unstyled-modal-description'
+				open={editTxn}
+				onClose={() => {
+					setEditTnx(false);
+					setTxnForm({
+						amount: '',
+						date: new Date().toISOString().split('T')[0],
+						txnName: '',
+						category: '',
+					});
+				}}
+				BackdropComponent={Backdrop}>
+				<Box className='modalBoxStyle'>
+					<div
+						style={{
+							fontSize: '24px',
+							textAlign: 'center',
+							fontWeight: '600',
+							margin: '5px 0px 10px 0px',
+						}}>
+						Update an Expense
+					</div>
+					<form onSubmit={handleAddTxn}>
+						<FormControl fullWidth style={{ marginTop: '10px' }}>
+							<InputLabel id='demo-simple-select-label'>Category</InputLabel>
+							<Select
+								autoFocus
+								required
+								labelId='demo-simple-select-label'
+								id='demo-simple-select'
+								value={txnForm.category}
+								label='Category'
+								margin='dense'
+								size='small'
+								onChange={(e) =>
+									setTxnForm((prev) => {
+										return {
+											...prev,
+											category: e.target.value,
+										};
+									})
+								}>
+								{categories.map((x) => (
+									<MenuItem key={x} value={x}>
+										{x}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<TextField
+							fullWidth
+							required
+							value={txnForm.txnName}
+							onChange={(e) =>
+								setTxnForm((prev) => {
+									return {
+										...prev,
+										txnName: e.target.value,
+									};
+								})
+							}
+							label='Title'
+							margin='dense'
+							size='small'
+						/>
+
+						<TextField
+							fullWidth
+							required
+							value={txnForm.date}
+							onChange={(e) =>
+								setTxnForm((prev) => {
+									return {
+										...prev,
+										date: e.target.value,
+									};
+								})
+							}
+							margin='dense'
+							type='date'
+							label='Date'
+							size='small'
+						/>
+
+						<TextField
+							type='number'
+							required
+							value={txnForm.amount}
+							onChange={(e) =>
+								setTxnForm((prev) => {
+									return {
+										...prev,
+										amount: e.target.value,
+									};
+								})
+							}
+							fullWidth
+							label='Amount'
+							margin='dense'
+							size='small'
+						/>
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'space-between',
+								marginTop: '10px',
+							}}>
+							<Button
+								type='submit'
+								variant='contained'
+								color='success'
+								style={{ width: '46%' }}>
+								ADD
+							</Button>
+							<Button
+								variant='outlined'
+								color='error'
+								onClick={() => {
+									setEditTnx(false);
+									setTxnForm({
+										amount: '',
+										date: new Date().toISOString().split('T')[0],
+										txnName: '',
+										category: '',
+									});
+								}}
+								style={{ width: '46%' }}>
+								Cancel
+							</Button>
+						</div>
+					</form>
 				</Box>
 			</ModalUnstyled>
 

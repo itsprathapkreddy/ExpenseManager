@@ -50,7 +50,6 @@ const Account = () => {
 			</div>
 			{!edit && <button onClick={() => setEdit(true)}>Edit</button>}
 			{edit && <button onClick={() => setEdit(false)}>Cancel</button>}
-			{newCur + ' ' + newUname}
 		</div>
 	);
 };
