@@ -65,6 +65,40 @@ const Transactions = () => {
 		m: 1,
 	};
 
+	const handleUpdateTxn = async (e) => {
+		e.preventDefault();
+		const timestamp = curRow;
+		const newTransData = {
+			transactions: {
+				[timestamp]: {
+					...txnForm,
+					time: timestamp,
+				},
+			},
+		};
+		await setDoc(doc(db, 'users', userId), newTransData, { merge: true });
+		let data = {
+			...transData,
+			[timestamp]: {
+				...txnForm,
+				time: timestamp,
+			},
+		};
+		dispatch({
+			type: 'txnAddStore',
+			payload: data,
+		});
+
+		setTransData(data);
+		setEditTnx(false);
+		setTxnForm({
+			amount: '',
+			date: new Date().toISOString().split('T')[0],
+			txnName: '',
+			category: '',
+		});
+	};
+
 	const handleAddTxn = async (e) => {
 		e.preventDefault();
 
@@ -120,31 +154,6 @@ const Transactions = () => {
 		);
 		setDetailTrans(false);
 	};
-
-	function formatDate(dateString) {
-		const date = new Date(dateString);
-		const months = [
-			'Jan',
-			'Feb',
-			'Mar',
-			'Apr',
-			'May',
-			'Jun',
-			'Jul',
-			'Aug',
-			'Sep',
-			'Oct',
-			'Nov',
-			'Dec',
-		];
-		return (
-			date.getDate().toString().padStart(2, '0') +
-			'-' +
-			months[date.getMonth()] +
-			'-' +
-			date.getFullYear()
-		);
-	}
 
 	return (
 		<div className='transContainer'>
@@ -340,6 +349,12 @@ const Transactions = () => {
 							style={{ width: '49%' }}
 							onClick={() => {
 								setDetailTrans(false);
+								setTxnForm({
+									amount: transData[curRow].amount,
+									date: transData[curRow].date,
+									txnName: transData[curRow].txnName,
+									category: transData[curRow].category,
+								});
 								setEditTnx(true);
 							}}>
 							EDIT
@@ -388,7 +403,7 @@ const Transactions = () => {
 						}}>
 						Update an Expense
 					</div>
-					<form onSubmit={handleAddTxn}>
+					<form onSubmit={handleUpdateTxn}>
 						<FormControl fullWidth style={{ marginTop: '10px' }}>
 							<InputLabel id='demo-simple-select-label'>Category</InputLabel>
 							<Select
@@ -419,6 +434,7 @@ const Transactions = () => {
 							fullWidth
 							required
 							value={txnForm.txnName}
+							defaultValue='fsfdw'
 							onChange={(e) =>
 								setTxnForm((prev) => {
 									return {
@@ -478,7 +494,7 @@ const Transactions = () => {
 								variant='contained'
 								color='success'
 								style={{ width: '46%' }}>
-								ADD
+								Update
 							</Button>
 							<Button
 								variant='outlined'
@@ -501,7 +517,11 @@ const Transactions = () => {
 			</ModalUnstyled>
 
 			<TableContainer
-				style={{ backgroundColor: 'white', paddingBottom: '50px' }}>
+				style={{
+					backgroundColor: 'white',
+					marginBottom: '100px',
+					cursor: 'pointer',
+				}}>
 				<Table>
 					<TableHead>
 						<TableRow>
@@ -525,7 +545,7 @@ const Transactions = () => {
 									}}>
 									<TableCell>
 										<span style={{ whiteSpace: 'nowrap' }}>
-											{formatDate(transData[key].date)}
+											{transData[key].date}
 										</span>
 									</TableCell>
 									<TableCell>{transData[key].category}</TableCell>
