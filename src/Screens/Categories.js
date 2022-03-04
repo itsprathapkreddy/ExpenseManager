@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import { db } from '../Auth/firebase';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -13,7 +11,6 @@ const Categories = () => {
 	);
 	const [newCatData, setNewCatData] = useState('');
 	const dispatch = useDispatch();
-
 	const addCat = async () => {
 		console.log(newCatData);
 		dispatch({
@@ -79,7 +76,7 @@ const Categories = () => {
 									style={{
 										width: '10%',
 										display: 'inline-block',
-										backgroundColor: '#d9534f',
+										backgroundColor: '#ba000d',
 										color: 'white',
 										margin: '0 auto',
 										cursor: 'pointer',

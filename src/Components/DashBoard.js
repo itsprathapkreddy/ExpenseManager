@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
 import './dashboard.css';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
 import CompareArrowsRoundedIcon from '@mui/icons-material/CompareArrowsRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
@@ -12,13 +11,11 @@ import Account from '../Screens/Account';
 import Categories from '../Screens/Categories';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Overview from '../Screens/Overview';
 
 const DashBoard = () => {
 	const data = useSelector((state) => state);
-	const [page, setPage] = useState('Overview');
+	const [page, setPage] = useState('overview');
 	const [value, setValue] = useState(0);
 
 	return (
@@ -46,6 +43,7 @@ const DashBoard = () => {
 			</Grid>
 			<Grid item md={10} xs={12}>
 				<div className='screenContainer'>
+					{page == 'overview' && <Overview />}
 					{page == 'transactions' && <Transactions />}
 					{page == 'categories' && <Categories />}
 					{page == 'account' && <Account />}

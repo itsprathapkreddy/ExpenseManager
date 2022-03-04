@@ -1,6 +1,5 @@
 import { Button, Grid } from '@mui/material';
 import '../Components/dashboard.css';
-// import transData from '../Data/transData.json';
 import { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -37,6 +36,11 @@ const Transactions = () => {
 	var [transData, setTransData] = useState(ts);
 	const [curRow, setCurRow] = useState('');
 	const [detailTrans, setDetailTrans] = useState(false);
+	const [filter, setFilter] = useState({
+		primary: 'Select',
+		secondary: 'Select',
+	});
+	const [dateRange, setDateRange] = useState([]);
 
 	const [txnForm, setTxnForm] = useState({
 		amount: '',
@@ -153,6 +157,94 @@ const Transactions = () => {
 			{ merge: true }
 		);
 		setDetailTrans(false);
+	};
+	useEffect(() => {
+		if (filter.primary !== 'Select' && filter.secondary !== 'Select') {
+			const temp = ts;
+			const tempObj = {};
+			Object.keys(temp).filter((x) => {
+				if (ts[x].category == filter.secondary) {
+					tempObj[x] = ts[x];
+				}
+			});
+			setTransData(tempObj);
+		}
+		if (filter.primary === 'month') {
+			const dates = Object.keys(ts)
+				.map((x) => ts[x].date)
+				.map((x) => new Date(x.replace(/-/g, '/')));
+
+			const maxDate = new Date(Math.max(...dates));
+			const minDate = new Date(Math.min(...dates));
+
+			let tempArr = [];
+
+			const maxMonth = maxDate.getMonth();
+			const maxYear = maxDate.getFullYear();
+			const minMonth = minDate.getMonth();
+			const minYear = minDate.getFullYear();
+			let months = [
+				'Jan',
+				'Feb',
+				'Mar',
+				'Apr',
+				'May',
+				'Jun',
+				'Jul',
+				'Aug',
+				'Sep',
+				'Oct',
+				'Nov',
+				'Dec',
+			];
+			for (let i = minYear; i <= maxYear; i++) {
+				for (let j = 0; j <= 11; j++) {
+					if (i === minYear && j >= minMonth) tempArr.push(months[j] + ' ' + i);
+					else if (i === maxYear && j <= maxMonth)
+						tempArr.push(months[j] + ' ' + i);
+				}
+			}
+			console.log(tempArr);
+			setDateRange(tempArr);
+		}
+	}, [filter]);
+
+	const handleFilter = (e) => {
+		setFilter({ ...filter, secondary: e.target.value });
+	};
+
+	const handleMonthFilter = (e) => {
+		let months = [
+			'Jan',
+			'Feb',
+			'Mar',
+			'Apr',
+			'May',
+			'Jun',
+			'Jul',
+			'Aug',
+			'Sep',
+			'Oct',
+			'Nov',
+			'Dec',
+		];
+
+		const cM = months.indexOf(e.target.value.split(' ')[0]);
+		const cY = Number(e.target.value.split(' ')[1]);
+
+		// console.log(cM + ' ' + cY);
+
+		const temp = ts;
+		const tempObj = {};
+		Object.keys(temp).filter((x) => {
+			if (
+				new Date(ts[x].date.replace(/-/g, '/')).getMonth() === cM &&
+				new Date(ts[x].date.replace(/-/g, '/')).getFullYear() == cY
+			) {
+				tempObj[x] = ts[x];
+			}
+		});
+		setTransData(tempObj);
 	};
 
 	return (
@@ -515,6 +607,43 @@ const Transactions = () => {
 					</form>
 				</Box>
 			</ModalUnstyled>
+
+			<div>
+				<label for='cars'>Filter By:</label>
+				<select
+					value={filter.primary}
+					onChange={(e) => setFilter({ ...filter, primary: e.target.value })}
+					name='cars'>
+					<option value=''>Select</option>
+					<option value='category'>Category</option>
+					<option value='month'>Month</option>
+				</select>
+
+				{filter.primary == 'category' && (
+					<select
+						name='carsd'
+						onChange={(e) => {
+							handleFilter(e);
+						}}>
+						<option value=''>Select</option>
+						{categories.map((x) => {
+							return <option value={x}>{x}</option>;
+						})}
+					</select>
+				)}
+				{filter.primary === 'month' && (
+					<select
+						name='carsd'
+						onChange={(e) => {
+							handleMonthFilter(e);
+						}}>
+						<option value=''>Select</option>
+						{dateRange.map((x) => {
+							return <option value={x}>{x}</option>;
+						})}
+					</select>
+				)}
+			</div>
 
 			<TableContainer
 				style={{

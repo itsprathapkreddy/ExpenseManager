@@ -37,6 +37,13 @@ const rootReducer = (state = intialState, action) => {
 				categories: action.payload,
 			};
 		}
+		case 'accountData': {
+			return {
+				...state,
+				uname: action.payload.uname,
+				currency: action.payload.currency,
+			};
+		}
 		case 'loggedFalse':
 			return { isLoggedIn: false };
 

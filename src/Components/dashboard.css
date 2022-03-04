@@ -1,6 +1,7 @@
 * {
 	margin: 0;
 	padding: 0;
+	box-sizing: border-box;
 }
 
 .dashboardHead {
@@ -38,16 +39,18 @@
 	overflow: hidden;
 }
 .account,
+.overview,
 .categories,
 .transContainer {
 	color: black;
 	min-height: 100vh;
 	background-color: #d3d3d3;
 	font-size: 20px;
-
+	overflow-x: hidden;
 	overflow-y: auto;
 }
 .accountHeader,
+.overviewHeader,
 .categriesHeader,
 .txnHeader {
 	padding: 10px 10px;
@@ -55,25 +58,7 @@
 	color: white;
 	font-size: 24px;
 }
-.inputAccount {
-	all: unset;
-	border-bottom: 1px solid black;
-}
-.test001 {
-	/* width: 100vw; */
-	overflow-x: auto;
-}
-.accountTable tbody {
-	width: 50%;
-	overflow-x: hidden;
-}
-.accountTable {
-	margin-top: 30px;
-	width: 50px;
-}
-.accountTable td {
-	padding: 10px;
-}
+
 .categoryList {
 	display: block;
 	padding-bottom: 70px;
