@@ -36,7 +36,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		console.log(hai);
+		console.log('hai');
 		onAuthStateChanged(auth, (user) => temp01(user));
 	});
 
