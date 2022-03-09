@@ -13,32 +13,31 @@ import { doc, getDoc } from 'firebase/firestore';
 function App() {
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
 	const dispatch = useDispatch();
+	const uid = useSelector((state) => state.uid);
 	const auth = getAuth(app);
-	const temp01 = async (user) => {
-		const docRef = doc(db, 'users', user.uid);
-
-		const docSnap = await getDoc(docRef);
-		if (docSnap.exists()) {
-			const data = docSnap.data();
-
-			dispatch({
-				type: 'loggedTrue',
-				payload: {
-					uname: data.uname,
-					email: data.email,
-					currency: data.currency,
-					categories: data.categories,
-					uid: user.uid,
-					transactions: data.transactions,
-				},
-			});
-		}
-	};
 
 	useEffect(() => {
-		console.log('hai');
-		onAuthStateChanged(auth, (user) => temp01(user));
-	});
+		// const temp01 = async (uid) => {
+		// 	const docRef = doc(db, 'users', uid);
+		// 	const docSnap = await getDoc(docRef);
+		// 	if (docSnap.exists()) {
+		// 		const data = docSnap.data();
+		// 		console.log(data);
+		// 		dispatch({
+		// 			type: 'loggedTrue',
+		// 			payload: {
+		// 				uname: data.uname,
+		// 				email: data.email,
+		// 				currency: data.currency,
+		// 				categories: data.categories,
+		// 				uid: uid,
+		// 				transactions: data.transactions,
+		// 			},
+		// 		});
+		// 	}
+		// };
+		// temp01(uid);
+	}, []);
 
 	return (
 		<>

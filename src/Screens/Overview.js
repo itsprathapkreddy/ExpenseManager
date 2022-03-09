@@ -31,9 +31,9 @@ ChartJS.register(
 );
 const Overview = () => {
 	const dispatch = useDispatch();
-	const ts = useSelector((state) => state.transactions);
-	const userId = useSelector((state) => state.uid);
 	const state = useSelector((state) => state);
+	const ts = state.transactions;
+	const userId = state.uid;
 	const [catValues, setCatValues] = useState([]);
 	const [cats, setCats] = useState([]);
 	const [dateRange, setDateRange] = useState([]);
@@ -107,6 +107,8 @@ const Overview = () => {
 		'rgba(102,102,255,1)',
 	];
 	useEffect(() => {
+		console.log(state);
+
 		Object.keys(state.transactions).map((x) => {
 			if (amountArr[state.transactions[x].category] === undefined)
 				amountArr[state.transactions[x].category] = 0;

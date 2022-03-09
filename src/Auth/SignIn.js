@@ -38,18 +38,21 @@ const SignIn = () => {
 
 		if (docSnap.exists()) {
 			const data = docSnap.data();
-
+			console.log(user.user.uid);
 			dispatch({
 				type: 'loggedTrue',
 				payload: {
+					transactions: data.transactions,
 					uname: data.uname,
 					email: data.email,
 					currency: data.currency,
-					uid: user.user.id,
+					categories: data.categories,
+					uid: user.user.uid,
 				},
 			});
+
+			console.log(data);
 		}
-		// navigate('../dashboard', { replace: true });
 	};
 
 	const handleSignOut = async () => {

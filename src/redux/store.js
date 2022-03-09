@@ -12,6 +12,7 @@ const intialState = {
 };
 
 const rootReducer = (state = intialState, action) => {
+	console.log(action);
 	switch (action.type) {
 		case 'loggedTrue': {
 			return {
