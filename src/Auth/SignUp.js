@@ -17,8 +17,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import muiLoader from '../Screens/muiLoader';
 
 const SignUp = () => {
+	const [loader, setLoader] = useState(false);
 	let navigate = useNavigate();
 	const [signUpEmail, setSignUpEmail] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
@@ -54,6 +56,7 @@ const SignUp = () => {
 	];
 
 	const handleSignUp = async (e) => {
+		setLoader(true);
 		e.preventDefault();
 		const defaultData = {
 			uname: uname,
@@ -86,6 +89,7 @@ const SignUp = () => {
 			payload: defaultData,
 		});
 		await setDoc(doc(db, 'users', user.user.uid), defaultData);
+		setLoader(false);
 	};
 
 	const handleForgotPassword = async () => {
@@ -99,6 +103,7 @@ const SignUp = () => {
 
 	return (
 		<div className='signInContainer'>
+			{loader && <muiLoader />}
 			<div className='signInPage'>
 				<div className='authHeader'>Expense Manager</div>
 				<form onSubmit={handleSignUp}>

@@ -14,7 +14,6 @@ function App() {
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
 	const dispatch = useDispatch();
 	const auth = getAuth(app);
-
 	const temp01 = async (user) => {
 		const docRef = doc(db, 'users', user.uid);
 
@@ -37,9 +36,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		onAuthStateChanged(auth, (user) => {
-			temp01(user);
-		});
+		onAuthStateChanged(auth, (user) => temp01(user));
 	});
 
 	return (
@@ -47,7 +44,13 @@ function App() {
 			<Routes>
 				<Route
 					path='/'
-					element={isLoggedIn ? <DashBoard /> : <Navigate to='/signin' />}
+					element={
+						isLoggedIn ? (
+							<Navigate to='/dashboard' />
+						) : (
+							<Navigate to='/signin' />
+						)
+					}
 				/>
 				<Route
 					path='/dashboard'

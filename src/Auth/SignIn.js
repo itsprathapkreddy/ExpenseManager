@@ -28,19 +28,16 @@ const SignIn = () => {
 
 	const handleSignIn = async (e) => {
 		e.preventDefault();
-		console.log('Loading........');
 		const user = await signInWithEmailAndPassword(
 			auth,
 			signInEmail,
 			signInPassword
 		);
-		console.log(user.user.uid);
 		const docRef = doc(db, 'users', user.user.uid);
 		const docSnap = await getDoc(docRef);
 
 		if (docSnap.exists()) {
 			const data = docSnap.data();
-			console.log('DOC DATA: ' + JSON.stringify(data));
 
 			dispatch({
 				type: 'loggedTrue',
@@ -48,9 +45,11 @@ const SignIn = () => {
 					uname: data.uname,
 					email: data.email,
 					currency: data.currency,
+					uid: user.user.id,
 				},
 			});
 		}
+		// navigate('../dashboard', { replace: true });
 	};
 
 	const handleSignOut = async () => {

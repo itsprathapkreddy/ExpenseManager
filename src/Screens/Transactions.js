@@ -204,7 +204,6 @@ const Transactions = () => {
 						tempArr.push(months[j] + ' ' + i);
 				}
 			}
-			console.log(tempArr);
 			setDateRange(tempArr);
 		}
 	}, [filter]);
@@ -231,8 +230,6 @@ const Transactions = () => {
 
 		const cM = months.indexOf(e.target.value.split(' ')[0]);
 		const cY = Number(e.target.value.split(' ')[1]);
-
-		// console.log(cM + ' ' + cY);
 
 		const temp = ts;
 		const tempObj = {};
@@ -609,12 +606,12 @@ const Transactions = () => {
 			</ModalUnstyled>
 
 			<div>
-				<label for='cars'>Filter By:</label>
+				<label htmlFor='filter'>Filter By:</label>
 				<select
 					value={filter.primary}
 					onChange={(e) => setFilter({ ...filter, primary: e.target.value })}
-					name='cars'>
-					<option value=''>Select</option>
+					name='filter'>
+					<option value='Select'>Select</option>
 					<option value='category'>Category</option>
 					<option value='month'>Month</option>
 				</select>
