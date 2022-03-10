@@ -51,37 +51,35 @@ function App() {
 
 	return (
 		<>
-			{loading ? (
-				<MuiLoader />
-			) : (
-				<Routes>
-					<Route
-						path='/'
-						element={
-							isLoggedIn ? (
-								<Navigate to='/dashboard' />
-							) : (
-								<Navigate to='/signin' />
-							)
-						}
-					/>
-					<Route
-						path='/dashboard'
-						element={isLoggedIn ? <DashBoard /> : <Navigate to='/signin' />}
-					/>
-					<Route
-						path='/signin'
-						element={isLoggedIn ? <Navigate to='/dashboard' /> : <SignIn />}
-					/>
-					<Route
-						path='/signup'
-						element={isLoggedIn ? <Navigate to='/dashboard' /> : <SignUp />}
-					/>
-					<Route path='/forgotpassword' element={<ForgotPassword />} />
+			{/* <MuiLoader /> */}
 
-					<Route path='*' element={<PageNotFound />} />
-				</Routes>
-			)}
+			<Routes>
+				<Route
+					path='/'
+					element={
+						isLoggedIn ? (
+							<Navigate to='/dashboard' />
+						) : (
+							<Navigate to='/signin' />
+						)
+					}
+				/>
+				<Route
+					path='/dashboard'
+					element={isLoggedIn ? <DashBoard /> : <Navigate to='/signin' />}
+				/>
+				<Route
+					path='/signin'
+					element={isLoggedIn ? <Navigate to='/dashboard' /> : <SignIn />}
+				/>
+				<Route
+					path='/signup'
+					element={isLoggedIn ? <Navigate to='/dashboard' /> : <SignUp />}
+				/>
+				<Route path='/forgotpassword' element={<ForgotPassword />} />
+
+				<Route path='*' element={<PageNotFound />} />
+			</Routes>
 		</>
 	);
 }

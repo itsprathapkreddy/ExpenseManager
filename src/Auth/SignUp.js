@@ -145,7 +145,11 @@ const SignUp = () => {
 						</Select>
 					</FormControl>
 
-					{errMessage && <Alert severity='error'>{errMessage}</Alert>}
+					{errMessage && (
+						<Alert severity='error' style={{ marginTop: '10px' }}>
+							{errMessage}
+						</Alert>
+					)}
 					<Button
 						type='submit'
 						fullWidth

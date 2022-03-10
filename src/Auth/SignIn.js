@@ -17,8 +17,6 @@ import {
 import { app, db } from './firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import MuiLoader from '../Screens/MuiLoader';
-import { isEmpty } from '@firebase/util';
-import ForgotPassword from './ForgorPassword';
 
 const SignIn = () => {
 	let navigate = useNavigate();
@@ -26,14 +24,12 @@ const SignIn = () => {
 	const [signInEmail, setSignInEmail] = useState('');
 	const [signInPassword, setSignInPassword] = useState('');
 	const [errMessage, setErrMessage] = useState('');
-
 	const dispatch = useDispatch();
-	const isLoggedIn = useSelector((state) => state.isLoggedIn);
-	const sentData = useSelector((state) => state.user);
 	const [loading, setLoading] = useState(false);
 
 	const handleSignIn = async (e) => {
 		e.preventDefault();
+		setLoading(true);
 		let user;
 		try {
 			user = await signInWithEmailAndPassword(
@@ -43,6 +39,7 @@ const SignIn = () => {
 			);
 		} catch (e) {
 			setErrMessage(e.code.split('auth/')[1]);
+			setLoading(false);
 			return;
 		}
 		const docRef = doc(db, 'users', user.user.uid);
@@ -65,82 +62,66 @@ const SignIn = () => {
 
 			console.log(data);
 		}
-	};
-
-	const handleSignOut = async () => {
-		await signOut(auth);
-		dispatch({ type: 'loggedFalse' });
-	};
-
-	const handleForgotPassword = async () => {
-		try {
-			await sendPasswordResetEmail(auth, signInEmail);
-			console.log('Reset Email Sent');
-		} catch (e) {
-			console.log(e.code + ' ' + e.message);
-		}
+		setLoading(false);
 	};
 
 	return (
 		<>
-			{loading ? (
-				<muiLoader />
-			) : (
-				<div className='signInContainer'>
-					<div className='signInPage'>
-						<div className='authHeader'>Expense Manager</div>
-						<form onSubmit={handleSignIn} className='formSignIn'>
-							<TextField
-								margin='normal'
-								required
-								autoFocus
-								fullWidth
-								label='Email Address'
-								onChange={(e) => setSignInEmail(e.target.value)}
-							/>
-							<TextField
-								margin='normal'
-								required
-								fullWidth
-								label='Password'
-								type='password'
-								onChange={(e) => setSignInPassword(e.target.value)}
-							/>
+			{loading && <MuiLoader />}
+			<div className='signInContainer'>
+				<div className='signInPage'>
+					<div className='authHeader'>Expense Manager</div>
+					<form onSubmit={handleSignIn} className='formSignIn'>
+						<TextField
+							margin='normal'
+							required
+							autoFocus
+							fullWidth
+							label='Email Address'
+							onChange={(e) => setSignInEmail(e.target.value)}
+						/>
+						<TextField
+							margin='normal'
+							required
+							fullWidth
+							label='Password'
+							type='password'
+							onChange={(e) => setSignInPassword(e.target.value)}
+						/>
 
-							{errMessage && <Alert severity='error'>{errMessage}</Alert>}
+						{errMessage && <Alert severity='error'>{errMessage}</Alert>}
 
-							<Button
-								type='submit'
-								fullWidth
-								variant='contained'
-								style={{ margin: '20px 0' }}>
-								Sign In
-							</Button>
-						</form>
-						<Grid container>
-							<Grid item xs>
-								<p
-									className='links'
-									onClick={() => {
-										navigate('../forgotpassword', { replace: true });
-									}}>
-									{/* onClick={handleForgotPassword}> */}
-									Forgot password?
-								</p>
-							</Grid>
-							<Grid item>
-								<p
-									className='links'
-									onClick={() => {
-										navigate('../signup', { replace: true });
-									}}>
-									{"Don't have an account? Sign Up"}
-								</p>
-							</Grid>
+						<Button
+							type='submit'
+							fullWidth
+							variant='contained'
+							style={{ margin: '20px 0' }}>
+							Sign In
+						</Button>
+					</form>
+					<Grid container>
+						<Grid item xs>
+							<p
+								className='links'
+								onClick={() => {
+									navigate('../forgotpassword', { replace: true });
+								}}>
+								{/* onClick={handleForgotPassword}> */}
+								Forgot password?
+							</p>
 						</Grid>
-					</div>
+						<Grid item>
+							<p
+								className='links'
+								onClick={() => {
+									navigate('../signup', { replace: true });
+								}}>
+								{"Don't have an account? Sign Up"}
+							</p>
+						</Grid>
+					</Grid>
 				</div>
-			)}
+			</div>
 		</>
 	);
 };
