@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
+import Alert from '@mui/material/Alert';
 import {
 	signInWithEmailAndPassword,
 	getAuth,
@@ -15,13 +16,16 @@ import {
 } from 'firebase/auth';
 import { app, db } from './firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import muiLoader from '../Screens/muiLoader';
+import MuiLoader from '../Screens/MuiLoader';
+import { isEmpty } from '@firebase/util';
+import ForgotPassword from './ForgorPassword';
 
 const SignIn = () => {
 	let navigate = useNavigate();
 	const auth = getAuth(app);
 	const [signInEmail, setSignInEmail] = useState('');
 	const [signInPassword, setSignInPassword] = useState('');
+	const [errMessage, setErrMessage] = useState('');
 
 	const dispatch = useDispatch();
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
@@ -29,13 +33,18 @@ const SignIn = () => {
 	const [loading, setLoading] = useState(false);
 
 	const handleSignIn = async (e) => {
-		setLoading(true);
 		e.preventDefault();
-		const user = await signInWithEmailAndPassword(
-			auth,
-			signInEmail,
-			signInPassword
-		);
+		let user;
+		try {
+			user = await signInWithEmailAndPassword(
+				auth,
+				signInEmail,
+				signInPassword
+			);
+		} catch (e) {
+			setErrMessage(e.code.split('auth/')[1]);
+			return;
+		}
 		const docRef = doc(db, 'users', user.user.uid);
 		const docSnap = await getDoc(docRef);
 
@@ -98,6 +107,8 @@ const SignIn = () => {
 								onChange={(e) => setSignInPassword(e.target.value)}
 							/>
 
+							{errMessage && <Alert severity='error'>{errMessage}</Alert>}
+
 							<Button
 								type='submit'
 								fullWidth
@@ -108,19 +119,23 @@ const SignIn = () => {
 						</form>
 						<Grid container>
 							<Grid item xs>
-								<Link href='#' variant='body2' onClick={handleForgotPassword}>
+								<p
+									className='links'
+									onClick={() => {
+										navigate('../forgotpassword', { replace: true });
+									}}>
+									{/* onClick={handleForgotPassword}> */}
 									Forgot password?
-								</Link>
+								</p>
 							</Grid>
 							<Grid item>
-								<Link
-									href='#'
-									variant='body2'
+								<p
+									className='links'
 									onClick={() => {
 										navigate('../signup', { replace: true });
 									}}>
 									{"Don't have an account? Sign Up"}
-								</Link>
+								</p>
 							</Grid>
 						</Grid>
 					</div>

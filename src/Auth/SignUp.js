@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import {
-	createUserWithEmailAndPassword,
-	sendPasswordResetEmail,
-	getAuth,
-} from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { app, db } from './firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import './auth.css';
@@ -17,7 +13,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import muiLoader from '../Screens/muiLoader';
+import MuiLoader from '../Screens/MuiLoader';
+
+import Alert from '@mui/material/Alert';
 
 const SignUp = () => {
 	const [loader, setLoader] = useState(false);
@@ -27,6 +25,7 @@ const SignUp = () => {
 	const [uname, setUname] = useState('');
 	const [cur, setCur] = useState('CAD');
 	const auth = getAuth(app);
+	const [errMessage, setErrMessage] = useState('');
 	const dispatch = useDispatch();
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
@@ -78,11 +77,18 @@ const SignUp = () => {
 				'Phone',
 			],
 		};
-		const user = await createUserWithEmailAndPassword(
-			auth,
-			signUpEmail,
-			signUpPassword
-		);
+		let user;
+		try {
+			user = await createUserWithEmailAndPassword(
+				auth,
+				signUpEmail,
+				signUpPassword
+			);
+		} catch (e) {
+			setErrMessage(e.code);
+			setLoader(false);
+			return;
+		}
 
 		dispatch({
 			type: 'loggedTrue',
@@ -92,18 +98,9 @@ const SignUp = () => {
 		setLoader(false);
 	};
 
-	const handleForgotPassword = async () => {
-		try {
-			await sendPasswordResetEmail(auth, signUpEmail);
-			console.log('Reset Email Sent');
-		} catch (e) {
-			console.log(e.code + ' ' + e.message);
-		}
-	};
-
 	return (
 		<div className='signInContainer'>
-			{loader && <muiLoader />}
+			{loader && <MuiLoader />}
 			<div className='signInPage'>
 				<div className='authHeader'>Expense Manager</div>
 				<form onSubmit={handleSignUp}>
@@ -148,6 +145,7 @@ const SignUp = () => {
 						</Select>
 					</FormControl>
 
+					{errMessage && <Alert severity='error'>{errMessage}</Alert>}
 					<Button
 						type='submit'
 						fullWidth
@@ -158,19 +156,22 @@ const SignUp = () => {
 				</form>
 				<Grid container>
 					<Grid item sm={4}>
-						<Link href='#' variant='body2' onClick={handleForgotPassword}>
+						<p
+							className='links'
+							onClick={() => {
+								navigate('../forgotpassword', { replace: true });
+							}}>
 							Forgot password?
-						</Link>
+						</p>
 					</Grid>
 					<Grid item sm={8} textAlign='right'>
-						<Link
-							href='#'
-							variant='body2'
+						<p
+							className='links'
 							onClick={() => {
 								navigate('../signin', { replace: true });
 							}}>
 							{'Already have an account? Sign In'}
-						</Link>
+						</p>
 					</Grid>
 				</Grid>
 			</div>

@@ -9,7 +9,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DashBoard from './Components/DashBoard';
 import { doc, getDoc } from 'firebase/firestore';
-import muiLoader from './Screens/muiLoader';
+import MuiLoader from './Screens/MuiLoader';
+import ForgotPassword from './Auth/ForgorPassword';
 
 function App() {
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
@@ -51,7 +52,7 @@ function App() {
 	return (
 		<>
 			{loading ? (
-				<muiLoader />
+				<MuiLoader />
 			) : (
 				<Routes>
 					<Route
@@ -76,6 +77,7 @@ function App() {
 						path='/signup'
 						element={isLoggedIn ? <Navigate to='/dashboard' /> : <SignUp />}
 					/>
+					<Route path='/forgotpassword' element={<ForgotPassword />} />
 
 					<Route path='*' element={<PageNotFound />} />
 				</Routes>

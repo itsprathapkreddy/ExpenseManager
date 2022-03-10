@@ -35,3 +35,10 @@
 	justify-content: center;
 	align-items: center;
 }
+.links {
+	color: #551a8b;
+	text-decoration: underline;
+	cursor: pointer;
+	padding: 5px;
+	font-size: 14px;
+}
