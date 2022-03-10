@@ -608,6 +608,7 @@ const Transactions = () => {
 			<div>
 				<label htmlFor='filter'>Filter By:</label>
 				<select
+					className='selectDrop'
 					value={filter.primary}
 					onChange={(e) => setFilter({ ...filter, primary: e.target.value })}
 					name='filter'>
@@ -618,6 +619,7 @@ const Transactions = () => {
 
 				{filter.primary == 'category' && (
 					<select
+						className='selectDrop'
 						name='carsd'
 						onChange={(e) => {
 							handleFilter(e);
@@ -630,6 +632,7 @@ const Transactions = () => {
 				)}
 				{filter.primary === 'month' && (
 					<select
+						className='selectDrop'
 						name='carsd'
 						onChange={(e) => {
 							handleMonthFilter(e);

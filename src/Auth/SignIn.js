@@ -15,6 +15,7 @@ import {
 } from 'firebase/auth';
 import { app, db } from './firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import muiLoader from '../Screens/muiLoader';
 
 const SignIn = () => {
 	let navigate = useNavigate();
@@ -25,8 +26,10 @@ const SignIn = () => {
 	const dispatch = useDispatch();
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
 	const sentData = useSelector((state) => state.user);
+	const [loading, setLoading] = useState(false);
 
 	const handleSignIn = async (e) => {
+		setLoading(true);
 		e.preventDefault();
 		const user = await signInWithEmailAndPassword(
 			auth,
@@ -70,54 +73,60 @@ const SignIn = () => {
 	};
 
 	return (
-		<div className='signInContainer'>
-			<div className='signInPage'>
-				<div className='authHeader'>Expense Manager</div>
-				<form onSubmit={handleSignIn} className='formSignIn'>
-					<TextField
-						margin='normal'
-						required
-						autoFocus
-						fullWidth
-						label='Email Address'
-						onChange={(e) => setSignInEmail(e.target.value)}
-					/>
-					<TextField
-						margin='normal'
-						required
-						fullWidth
-						label='Password'
-						type='password'
-						onChange={(e) => setSignInPassword(e.target.value)}
-					/>
+		<>
+			{loading ? (
+				<muiLoader />
+			) : (
+				<div className='signInContainer'>
+					<div className='signInPage'>
+						<div className='authHeader'>Expense Manager</div>
+						<form onSubmit={handleSignIn} className='formSignIn'>
+							<TextField
+								margin='normal'
+								required
+								autoFocus
+								fullWidth
+								label='Email Address'
+								onChange={(e) => setSignInEmail(e.target.value)}
+							/>
+							<TextField
+								margin='normal'
+								required
+								fullWidth
+								label='Password'
+								type='password'
+								onChange={(e) => setSignInPassword(e.target.value)}
+							/>
 
-					<Button
-						type='submit'
-						fullWidth
-						variant='contained'
-						style={{ margin: '20px 0' }}>
-						Sign In
-					</Button>
-				</form>
-				<Grid container>
-					<Grid item xs>
-						<Link href='#' variant='body2' onClick={handleForgotPassword}>
-							Forgot password?
-						</Link>
-					</Grid>
-					<Grid item>
-						<Link
-							href='#'
-							variant='body2'
-							onClick={() => {
-								navigate('../signup', { replace: true });
-							}}>
-							{"Don't have an account? Sign Up"}
-						</Link>
-					</Grid>
-				</Grid>
-			</div>
-		</div>
+							<Button
+								type='submit'
+								fullWidth
+								variant='contained'
+								style={{ margin: '20px 0' }}>
+								Sign In
+							</Button>
+						</form>
+						<Grid container>
+							<Grid item xs>
+								<Link href='#' variant='body2' onClick={handleForgotPassword}>
+									Forgot password?
+								</Link>
+							</Grid>
+							<Grid item>
+								<Link
+									href='#'
+									variant='body2'
+									onClick={() => {
+										navigate('../signup', { replace: true });
+									}}>
+									{"Don't have an account? Sign Up"}
+								</Link>
+							</Grid>
+						</Grid>
+					</div>
+				</div>
+			)}
+		</>
 	);
 };
 export default SignIn;

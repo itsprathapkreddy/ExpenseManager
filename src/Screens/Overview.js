@@ -280,6 +280,7 @@ const Overview = () => {
 			<div className='overviewHeader'>
 				Overview
 				<select
+					className='selectDrop'
 					name='carsd'
 					onChange={(e) => {
 						handleOverview(e);

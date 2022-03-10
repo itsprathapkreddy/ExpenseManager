@@ -9,64 +9,77 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DashBoard from './Components/DashBoard';
 import { doc, getDoc } from 'firebase/firestore';
+import muiLoader from './Screens/muiLoader';
 
 function App() {
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
 	const dispatch = useDispatch();
 	const uid = useSelector((state) => state.uid);
 	const auth = getAuth(app);
+	const [loading, setLoading] = useState(true);
+
+	const temp01 = async (uid) => {
+		const docRef = doc(db, 'users', uid);
+		const docSnap = await getDoc(docRef);
+		if (docSnap.exists()) {
+			const data = docSnap.data();
+			console.log(data);
+			dispatch({
+				type: 'loggedTrue',
+				payload: {
+					uname: data.uname,
+					email: data.email,
+					currency: data.currency,
+					categories: data.categories,
+					uid: uid,
+					transactions: data.transactions,
+				},
+			});
+			console.log(data);
+		}
+		setLoading(false);
+	};
 
 	useEffect(() => {
-		// const temp01 = async (uid) => {
-		// 	const docRef = doc(db, 'users', uid);
-		// 	const docSnap = await getDoc(docRef);
-		// 	if (docSnap.exists()) {
-		// 		const data = docSnap.data();
-		// 		console.log(data);
-		// 		dispatch({
-		// 			type: 'loggedTrue',
-		// 			payload: {
-		// 				uname: data.uname,
-		// 				email: data.email,
-		// 				currency: data.currency,
-		// 				categories: data.categories,
-		// 				uid: uid,
-		// 				transactions: data.transactions,
-		// 			},
-		// 		});
-		// 	}
-		// };
-		// temp01(uid);
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				temp01(user.uid);
+			} else setLoading(false);
+		});
 	}, []);
 
 	return (
 		<>
-			<Routes>
-				<Route
-					path='/'
-					element={
-						isLoggedIn ? (
-							<Navigate to='/dashboard' />
-						) : (
-							<Navigate to='/signin' />
-						)
-					}
-				/>
-				<Route
-					path='/dashboard'
-					element={isLoggedIn ? <DashBoard /> : <Navigate to='/signin' />}
-				/>
-				<Route
-					path='/signin'
-					element={isLoggedIn ? <Navigate to='/dashboard' /> : <SignIn />}
-				/>
-				<Route
-					path='/signup'
-					element={isLoggedIn ? <Navigate to='/dashboard' /> : <SignUp />}
-				/>
+			{loading ? (
+				<muiLoader />
+			) : (
+				<Routes>
+					<Route
+						path='/'
+						element={
+							isLoggedIn ? (
+								<Navigate to='/dashboard' />
+							) : (
+								<Navigate to='/signin' />
+							)
+						}
+					/>
+					<Route
+						path='/dashboard'
+						element={isLoggedIn ? <DashBoard /> : <Navigate to='/signin' />}
+					/>
+					<Route
+						path='/signin'
+						element={isLoggedIn ? <Navigate to='/dashboard' /> : <SignIn />}
+					/>
+					<Route
+						path='/signup'
+						element={isLoggedIn ? <Navigate to='/dashboard' /> : <SignUp />}
+					/>
 
-				<Route path='*' element={<PageNotFound />} />
-			</Routes>
+					<Route path='*' element={<PageNotFound />} />
+				</Routes>
+			)}
 		</>
 	);
 }

@@ -10,6 +10,7 @@ const muiLoader = () => {
 				left: '0px',
 				height: '100vh',
 				width: '100%',
+				zIndex: 1000,
 			}}>
 			<CircularProgress />
 		</div>
