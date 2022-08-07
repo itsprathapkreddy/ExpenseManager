@@ -38,6 +38,20 @@ const Overview = () => {
 	const [cats, setCats] = useState([]);
 	const [dateRange, setDateRange] = useState([]);
 	const amountArr = {};
+	const months = [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sep',
+		'Oct',
+		'Nov',
+		'Dec',
+	];
 	const [lineData, setLineData] = useState({
 		keys: [
 			1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -106,29 +120,29 @@ const Overview = () => {
 		'rgba(153,230,230,1)',
 		'rgba(102,102,255,1)',
 	];
-	useEffect(() => {
-		console.log(state);
+	// useEffect(() => {
+	// 	console.log(state);
 
-		Object.keys(state.transactions).map((x) => {
-			if (amountArr[state.transactions[x].category] === undefined)
-				amountArr[state.transactions[x].category] = 0;
-			amountArr[state.transactions[x].category] += Number(
-				state.transactions[x].amount
-			);
-			setCatValues(Object.values(amountArr));
-			setCats(Object.keys(amountArr));
-		});
-	}, []);
+	// 	Object.keys(state.transactions).map((x) => {
+	// 		if (amountArr[state.transactions[x].category] === undefined)
+	// 			amountArr[state.transactions[x].category] = 0;
+	// 		amountArr[state.transactions[x].category] += Number(
+	// 			state.transactions[x].amount
+	// 		);
+	// 		setCatValues(Object.values(amountArr));
+	// 		setCats(Object.keys(amountArr));
+	// 	});
+	// }, []);
 
 	const PieChartdata = {
 		labels: cats,
 		datasets: [
 			{
-				label: '# of Votes',
+				// label: '# of Votes',
 				data: catValues,
 				backgroundColor: borderColorArray,
-				borderColor: 'white',
-				borderWidth: 2,
+				borderColor: 'rgba(0,0,0,1)',
+				borderWidth: 1,
 			},
 		],
 	};
@@ -136,7 +150,7 @@ const Overview = () => {
 		labels: lineData.keys,
 		datasets: [
 			{
-				label: 'My First Dataset',
+				label: 'Monthly Expenses',
 				data: lineData.values,
 				fill: false,
 				borderColor: 'rgb(75, 192, 192)',
@@ -158,20 +172,6 @@ const Overview = () => {
 	};
 
 	useEffect(() => {
-		let months = [
-			'Jan',
-			'Feb',
-			'Mar',
-			'Apr',
-			'May',
-			'Jun',
-			'Jul',
-			'Aug',
-			'Sep',
-			'Oct',
-			'Nov',
-			'Dec',
-		];
 		const yearMonObj = {};
 		dateRange.map((x) => (yearMonObj[x] = Number(0)));
 		Object.keys(ts).map((x) => {
@@ -187,7 +187,7 @@ const Overview = () => {
 		labels: dateRange.map((x) => x),
 		datasets: [
 			{
-				label: 'Dataset 1',
+				label: 'Yearly Expenses',
 				data: barData,
 				backgroundColor: borderColorArray,
 			},
@@ -208,20 +208,7 @@ const Overview = () => {
 		const maxYear = maxDate.getFullYear();
 		const minMonth = minDate.getMonth();
 		const minYear = minDate.getFullYear();
-		let months = [
-			'Jan',
-			'Feb',
-			'Mar',
-			'Apr',
-			'May',
-			'Jun',
-			'Jul',
-			'Aug',
-			'Sep',
-			'Oct',
-			'Nov',
-			'Dec',
-		];
+
 		for (let i = minYear; i <= maxYear; i++) {
 			for (let j = 0; j <= 11; j++) {
 				if (i === minYear && j >= minMonth) tempArr.push(months[j] + ' ' + i);
@@ -232,21 +219,8 @@ const Overview = () => {
 		setDateRange(tempArr);
 		// handleOverview({ e: { target: { value: 'Mar 2022' } } });
 	}, []);
+
 	const handleOverview = (e) => {
-		let months = [
-			'Jan',
-			'Feb',
-			'Mar',
-			'Apr',
-			'May',
-			'Jun',
-			'Jul',
-			'Aug',
-			'Sep',
-			'Oct',
-			'Nov',
-			'Dec',
-		];
 
 		const cM = months.indexOf(e.target.value.split(' ')[0]);
 		const cY = Number(e.target.value.split(' ')[1]);
@@ -285,7 +259,6 @@ const Overview = () => {
 					onChange={(e) => {
 						handleOverview(e);
 					}}>
-					<option value=''>Select</option>
 					{dateRange.map((x) => (
 						<option value={x}>{x}</option>
 					))}
@@ -309,6 +282,7 @@ const Overview = () => {
 						backgroundColor: '#fffafa',
 						width: '100%',
 					}}>
+						{console.log("Data for Line Chart",lineChartData.datasets[0].data.length)}
 					<Line style={{ minHeight: '300px' }} data={lineChartData} />
 				</Grid>
 				<Grid
