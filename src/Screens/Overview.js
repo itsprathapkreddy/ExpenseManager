@@ -61,7 +61,9 @@ const Overview = () => {
 	});
 	const [barData, setBarData] = useState([]);
 	const [dropMonth, setDropMonth] = useState();
-
+	const today = new Date();
+	const selectDefault = `${months[today.getMonth()]} ${today.getFullYear()}`;
+	console.log({selectDefault});
 	const borderColorArray = [
 		'rgba(255, 99, 132, 1)',
 		'rgba(54, 162, 235, 1)',
@@ -217,11 +219,11 @@ const Overview = () => {
 			}
 		}
 		setDateRange(tempArr);
-		// handleOverview({ e: { target: { value: 'Mar 2022' } } });
+		handleOverview({ target: { value: `${selectDefault}`  } });
 	}, []);
 
 	const handleOverview = (e) => {
-
+		console.log("E from select: ",e.target.value)
 		const cM = months.indexOf(e.target.value.split(' ')[0]);
 		const cY = Number(e.target.value.split(' ')[1]);
 		let tempObj = {};
@@ -256,6 +258,7 @@ const Overview = () => {
 				<select
 					className='selectDrop'
 					name='carsd'
+					value = {selectDefault}
 					onChange={(e) => {
 						handleOverview(e);
 					}}>
