@@ -141,10 +141,11 @@ const Transactions = () => {
 
 	const deleteTran = async () => {
 		delete transData[curRow];
+		delete ts[curRow];
 
 		dispatch({
 			type: 'txnAddStore',
-			payload: transData,
+			payload: ts,
 		});
 		await updateDoc(doc(db, 'users', userId), {
 			transactions: deleteField(),
@@ -152,7 +153,7 @@ const Transactions = () => {
 		await setDoc(
 			doc(db, 'users', userId),
 			{
-				transactions: transData,
+				transactions: ts,
 			},
 			{ merge: true }
 		);
