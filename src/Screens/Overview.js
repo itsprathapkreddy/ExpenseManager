@@ -237,7 +237,8 @@ const Overview = () => {
 			}
 		});
 
-		let testArr = lineData.keys.map((x) => tempDayObj[x]);
+		let testArr = lineData.keys.map((x) => tempDayObj[x] ? tempDayObj[x]: '');
+		console.log({testArr})
 		setLineData((prev) => {
 			return { keys: prev.keys, values: testArr };
 		});
@@ -260,10 +261,10 @@ const Overview = () => {
 				<select
 					className='selectDrop'
 					name='carsd'
-					value = {selectDefault}
 					onChange={(e) => {
 						handleOverview(e);
 					}}>
+					<option>{selectDefault}</option>
 					{dateRange.map((x) => (
 						<option value={x}>{x}</option>
 					))}
