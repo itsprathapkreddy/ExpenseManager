@@ -63,7 +63,6 @@ const Overview = () => {
 	const [dropMonth, setDropMonth] = useState();
 	const today = new Date();
 	const selectDefault = `${months[today.getMonth()]} ${today.getFullYear()}`;
-	console.log({selectDefault});
 	const borderColorArray = [
 		'rgba(255, 99, 132, 1)',
 		'rgba(54, 162, 235, 1)',
@@ -123,8 +122,6 @@ const Overview = () => {
 		'rgba(102,102,255,1)',
 	];
 	// useEffect(() => {
-	// 	console.log(state);
-
 	// 	Object.keys(state.transactions).map((x) => {
 	// 		if (amountArr[state.transactions[x].category] === undefined)
 	// 			amountArr[state.transactions[x].category] = 0;
@@ -140,7 +137,6 @@ const Overview = () => {
 		labels: cats,
 		datasets: [
 			{
-				// label: '# of Votes',
 				data: catValues,
 				backgroundColor: borderColorArray,
 				borderColor: 'rgba(0,0,0,1)',
@@ -181,7 +177,6 @@ const Overview = () => {
 			let m = ts[x].date.substr(5, 2);
 			yearMonObj[months[Number(m) - 1] + ' ' + y] += Number(ts[x].amount);
 		});
-		// console.log(yearMonObj);
 		setBarData(dateRange.map((x) => yearMonObj[x]));
 	}, [dateRange]);
 
@@ -223,7 +218,6 @@ const Overview = () => {
 	}, []);
 
 	const handleOverview = (e) => {
-		console.log("E from select: ",e.target.value)
 		const cM = months.indexOf(e.target.value.split(' ')[0]);
 		const cY = Number(e.target.value.split(' ')[1]);
 		let tempObj = {};
@@ -247,8 +241,16 @@ const Overview = () => {
 		setLineData((prev) => {
 			return { keys: prev.keys, values: testArr };
 		});
-		setCatValues(Object.values(tempObj));
-		setCats(Object.keys(tempObj));
+		
+		//testing sorting
+		let entries = Object.entries(tempObj);
+		let sorted = entries.sort((a, b) => b[1] - a[1]);
+		console.log({sorted})
+		console.log("cat Values:", sorted.map((x)=>x[0]));
+		//test ended
+
+		setCatValues(sorted.map((x)=>x[1]));
+		setCats(sorted.map((x)=>x[0]));
 	};
 
 	return (
@@ -285,7 +287,6 @@ const Overview = () => {
 						backgroundColor: '#fffafa',
 						width: '100%',
 					}}>
-						{console.log("Data for Line Chart",lineChartData.datasets[0].data.length)}
 					<Line style={{ minHeight: '300px' }} data={lineChartData} />
 				</Grid>
 				<Grid
