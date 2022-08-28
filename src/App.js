@@ -9,7 +9,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import DashBoard from './Components/DashBoard';
 import { doc, getDoc } from 'firebase/firestore';
-import MuiLoader from './Screens/MuiLoader';
+import MuiLoader from './Screens/muiLoader';
 import ForgotPassword from './Auth/ForgorPassword';
 
 function App() {

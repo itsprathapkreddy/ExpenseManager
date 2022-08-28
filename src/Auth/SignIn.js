@@ -16,7 +16,7 @@ import {
 } from 'firebase/auth';
 import { app, db } from './firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import MuiLoader from '../Screens/MuiLoader';
+import MuiLoader from '../Screens/muiLoader';
 
 const SignIn = () => {
 	let navigate = useNavigate();

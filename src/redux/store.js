@@ -52,6 +52,6 @@ const rootReducer = (state = intialState, action) => {
 			return state;
 	}
 };
-//Testing the SSH Key Push
+
 const store = createStore(rootReducer);
 export default store;

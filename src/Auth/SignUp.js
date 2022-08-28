@@ -13,7 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import MuiLoader from '../Screens/MuiLoader';
+import MuiLoader from '../Screens/muiLoader';
 
 import Alert from '@mui/material/Alert';
 
