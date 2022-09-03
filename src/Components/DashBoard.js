@@ -7,7 +7,7 @@ import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import { useState } from 'react';
 import Transactions from '../Screens/Transactions';
-import Account from '../Screens/Account';
+import Account from '../Screens/Account/Account';
 import Categories from '../Screens/Categories';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
