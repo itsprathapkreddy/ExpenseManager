@@ -1,3 +1,4 @@
+// Redux Initial State
 export const initialState = {
 	uid: '',
 	isLoggedIn: false,
