@@ -1,7 +1,5 @@
-import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { db } from "../../Auth/firebase";
 import { AccountButtons } from "./AccountButtons";
 import { AccountDetails } from "./AccountDetails";
 import { AccountDetailsEdit } from "./AccountDetailsEdit";
@@ -14,25 +12,6 @@ const Account = () => {
   const [edit, setEdit] = useState(false);
   const [newUname, setNewUname] = useState(data.uname);
   const [newCur, setNewCur] = useState(data.currency);
-
-  const handleUpdate = async () => {
-    setEdit(false);
-    await setDoc(
-      doc(db, "users", userId),
-      {
-        uname: newUname,
-        currency: newCur,
-      },
-      { merge: true }
-    );
-    dispatch({
-      type: "accountData",
-      payload: {
-        uname: newUname,
-        currency: newCur,
-      },
-    });
-  };
 
   const styles = {
     mainContainer: {
@@ -76,6 +55,9 @@ const Account = () => {
         <AccountButtons
           edit={edit}
           data={data}
+          newUname={newUname}
+          newCur={newCur}
+          userId={userId}
           handleUpdate={handleUpdate}
           setNewCur={setNewCur}
           setEdit={setEdit}

@@ -1,7 +1,20 @@
 import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { handleAccountUpdate } from "../../utils/shared functions/screenFunctions";
 
 export const AccountButtons = (props) => {
-  const { edit, setEdit, setNewUname, setNewCur, handleUpdate, data } = props;
+  const {
+    edit,
+    setEdit,
+    setNewUname,
+    setNewCur,
+    handleUpdate,
+    data,
+    newUname,
+    newCur,
+    userId,
+  } = props;
+  const dispatch = useDispatch();
   return (
     <div style={{ margin: "10px" }}>
       {!edit && (
@@ -11,7 +24,13 @@ export const AccountButtons = (props) => {
       )}
       {edit && (
         <>
-          <Button variant="contained" color="success" onClick={handleUpdate}>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() =>
+              handleAccountUpdate(dispatch, setEdit, newUname, newCur, userId)
+            }
+          >
             Update
           </Button>
           <Button

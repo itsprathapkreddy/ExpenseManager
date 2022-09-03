@@ -7,6 +7,7 @@ import { logoutHandler } from "../../utils/shared functions/screenFunctions";
 export const LogoutButton = () => {
   const dispatch = useDispatch();
   const auth = getAuth(app);
+  console.log({ auth });
   const logoutContainer = {
     width: "90%",
     margin: "5%",
