@@ -1,13 +1,9 @@
 import { Button } from "@mui/material";
-import { getAuth } from "firebase/auth";
-import { app } from "../../Auth/firebase";
 import { useDispatch } from "react-redux";
-import { logoutHandler } from "../../utils/shared functions/screenFunctions";
+import { logoutHandler } from "../../utils/sharedFunctions/screenFunctions";
 
 export const LogoutButton = () => {
   const dispatch = useDispatch();
-  const auth = getAuth(app);
-  console.log({ auth });
   const logoutContainer = {
     width: "90%",
     margin: "5%",
@@ -22,7 +18,7 @@ export const LogoutButton = () => {
         variant="contained"
         style={{ backgroundColor: "#f44336" }}
         fullWidth
-        onClick={() => logoutHandler(dispatch, auth)}
+        onClick={() => logoutHandler(dispatch)}
       >
         Logout
       </Button>

@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { handleAccountUpdate } from "../../utils/shared functions/screenFunctions";
+import { handleAccountUpdate } from "../../utils/sharedFunctions/screenFunctions";
 
 export const AccountButtons = (props) => {
   const {
@@ -8,7 +8,6 @@ export const AccountButtons = (props) => {
     setEdit,
     setNewUname,
     setNewCur,
-    handleUpdate,
     data,
     newUname,
     newCur,

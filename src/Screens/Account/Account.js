@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { AccountButtons } from "./AccountButtons";
 import { AccountDetails } from "./AccountDetails";
 import { AccountDetailsEdit } from "./AccountDetailsEdit";
 import { LogoutButton } from "./LogoutButton";
 
 const Account = () => {
-  const dispatch = useDispatch();
   const data = useSelector((state) => state);
   const userId = data.uid;
   const [edit, setEdit] = useState(false);
@@ -58,7 +57,6 @@ const Account = () => {
           newUname={newUname}
           newCur={newCur}
           userId={userId}
-          handleUpdate={handleUpdate}
           setNewCur={setNewCur}
           setEdit={setEdit}
           setNewUname={setNewUname}

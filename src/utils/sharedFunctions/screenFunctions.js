@@ -1,9 +1,11 @@
-import { signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { loggedFalse } from "../constants/reduxConstants";
-import { db } from "../../Auth/firebase";
+import { app, db } from "../../Auth/firebase";
 import { doc, setDoc } from "firebase/firestore";
 
-export const logoutHandler = async (dispatch, auth) => {
+const auth = getAuth(app);
+
+export const logoutHandler = async (dispatch) => {
   await signOut(auth);
   dispatch({ type: loggedFalse });
 };
