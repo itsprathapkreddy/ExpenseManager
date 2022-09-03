@@ -12,7 +12,6 @@ const Categories = () => {
 	const [newCatData, setNewCatData] = useState('');
 	const dispatch = useDispatch();
 	const addCat = async () => {
-		console.log(newCatData);
 		dispatch({
 			type: 'catStore',
 			payload: [...categories, newCatData],

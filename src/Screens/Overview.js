@@ -238,7 +238,6 @@ const Overview = () => {
 		});
 
 		let testArr = lineData.keys.map((x) => tempDayObj[x] ? tempDayObj[x]: '');
-		console.log({testArr})
 		setLineData((prev) => {
 			return { keys: prev.keys, values: testArr };
 		});
@@ -246,8 +245,6 @@ const Overview = () => {
 		//testing sorting
 		let entries = Object.entries(tempObj);
 		let sorted = entries.sort((a, b) => b[1] - a[1]);
-		console.log({sorted})
-		console.log("cat Values:", sorted.map((x)=>x[0]));
 		//test ended
 
 		setCatValues(sorted.map((x)=>x[1]));

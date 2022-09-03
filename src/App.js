@@ -24,7 +24,6 @@ function App() {
 		const docSnap = await getDoc(docRef);
 		if (docSnap.exists()) {
 			const data = docSnap.data();
-			console.log(data);
 			dispatch({
 				type: 'loggedTrue',
 				payload: {
@@ -36,7 +35,6 @@ function App() {
 					transactions: data.transactions,
 				},
 			});
-			console.log(data);
 		}
 		setLoading(false);
 	};

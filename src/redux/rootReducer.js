@@ -1,7 +1,6 @@
 import { initialState, loggedTrue, loggedFalse, txnAddStore, catStore, accountData } from "../utils/constants/reduxConstants";
 
 export const rootReducer = (state = initialState, action) => {
-	console.log(action);
 	switch (action.type) {
 		case loggedTrue: {
 			return {

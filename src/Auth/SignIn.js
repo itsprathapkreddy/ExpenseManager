@@ -47,7 +47,6 @@ const SignIn = () => {
 
 		if (docSnap.exists()) {
 			const data = docSnap.data();
-			console.log(user.user.uid);
 			dispatch({
 				type: 'loggedTrue',
 				payload: {
@@ -60,7 +59,6 @@ const SignIn = () => {
 				},
 			});
 
-			console.log(data);
 		}
 		setLoading(false);
 	};
