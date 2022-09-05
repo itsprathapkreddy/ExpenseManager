@@ -1,48 +1,106 @@
-import { Grid } from "@mui/material";
-import { useSelector } from "react-redux";
-import "./dashboard.css";
-import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
-import CompareArrowsRoundedIcon from "@mui/icons-material/CompareArrowsRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import CategoryRoundedIcon from "@mui/icons-material/CategoryRounded";
-import { useState } from "react";
-import Transactions from "../Screens/Transactions";
-import Account from "../Screens/Account/Account";
-import Categories from "../Screens/Categories";
+import CompareArrowsRoundedIcon from "@mui/icons-material/CompareArrowsRounded";
+import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
+import { Grid } from "@mui/material";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import { useState } from "react";
+import logo from "../assets/logo.svg";
+import Account from "../Screens/Account/Account";
+import Categories from "../Screens/Categories";
 import Overview from "../Screens/Overview";
+import Transactions from "../Screens/Transactions";
+import "./dashboard.css";
 
 const DashBoard = () => {
-  const data = useSelector((state) => state);
   const [page, setPage] = useState("overview");
   const [value, setValue] = useState(0);
+  const styles = {
+    headerContainer: {
+      backgroundColor: "#403E3D",
+      color: "white",
+      fontSize: "30px",
+      borderBottom: "2px solid black",
+      height: "60px",
+      position: "sticky",
+      top: "0",
+      padding: "15px",
+      fontFamily: "Nunito!important",
+    },
+    buttonContainer: {
+      backgroundColor: "#36454F",
+      color: "#fff",
+      height: "calc(100vh - 60px)",
+      position: "sticky",
+      top: "60px",
+    },
+  };
 
   return (
     <Grid container spacing={0}>
-      <Grid item md={2} xs={0} style={{ position: "relative" }}>
-        <div className="buttonContainer">
-          <div className="dashboardHead">Expense Manager</div>
-          <div className="buttons" onClick={() => setPage("overview")}>
-            <DashboardCustomizeRoundedIcon sx={{ fontSize: 20 }} />
-            &nbsp; Overview
+      <Grid container spacing={0} style={styles.headerContainer}>
+        <img src={logo} alt="logo" width="30px" height="30px" />
+        <span style={{ paddingLeft: "20px" }}>Expense Manager</span>
+      </Grid>
+
+      <Grid item md={2} xs={0}>
+        <div className="buttonContainer" style={styles.buttonContainer}>
+          <div style={{ padding: "10px 0px" }}></div>
+
+          <div
+            className={
+              page === "overview" ? "buttons addBorder" : "buttons noBorder"
+            }
+            onClick={() => setPage("overview")}
+          >
+            <span></span>
+            <DashboardCustomizeRoundedIcon sx={{ fontSize: 24 }} />
+            <span style={{ verticalAlign: "top", paddingLeft: "15px" }}>
+              Overview
+            </span>
           </div>
-          <div className="buttons" onClick={() => setPage("transactions")}>
-            <CompareArrowsRoundedIcon sx={{ fontSize: 20 }} />
-            &nbsp; Transactions
+
+          <div
+            className={
+              page === "transactions" ? "buttons addBorder" : "buttons noBorder"
+            }
+            onClick={() => setPage("transactions")}
+          >
+            <CompareArrowsRoundedIcon sx={{ fontSize: 24 }} />
+            <span style={{ verticalAlign: "top", paddingLeft: "15px" }}>
+              Transactions
+            </span>
           </div>
-          <div className="buttons" onClick={() => setPage("categories")}>
-            <CategoryRoundedIcon sx={{ fontSize: 20 }} />
-            &nbsp; Categories
+
+          <div
+            className={
+              page === "categories" ? "buttons addBorder" : "buttons noBorder"
+            }
+            onClick={() => setPage("categories")}
+          >
+            <CategoryRoundedIcon sx={{ fontSize: 24 }} />
+            <span style={{ verticalAlign: "top", paddingLeft: "15px" }}>
+              Categories
+            </span>
           </div>
-          <div className="buttons" onClick={() => setPage("account")}>
-            <AccountCircleRoundedIcon sx={{ fontSize: 20 }} />
-            &nbsp; Account
+
+          <div
+            className={
+              page === "account" ? "buttons addBorder" : "buttons noBorder"
+            }
+            onClick={() => setPage("account")}
+          >
+            <AccountCircleRoundedIcon sx={{ fontSize: 24 }} />
+            <span style={{ verticalAlign: "top", paddingLeft: "15px" }}>
+              Account
+            </span>
           </div>
         </div>
       </Grid>
+
       <Grid item md={10} xs={12}>
-        <div className="screenContainer">
+        <div className="screenContainer" style={styles.buttonContainer}>
           {page == "overview" && <Overview />}
           {page == "transactions" && <Transactions />}
           {page == "categories" && <Categories />}
